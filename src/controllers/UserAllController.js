@@ -1,20 +1,20 @@
 const UserAllModel = require('../models/UserAllModel');
  
- //post data to database
- const postController = async(req,res)=>{
+
+ //post data to database;
+let  postController = async(req,res)=>{
     console.log(req);
    const data = new UserAllModel({
       name: req.body.name,
       age: req.body.age,
       email: req.body.email
-  })
-
+  });
   try {
       let dataSave = await data.save();
       res.status(200).json(dataSave)
   }
   catch (error) {
-      res.status(400).json({message: error.message})
+      res.status(400).json({message: error.message});
   }
     
  }
@@ -23,7 +23,7 @@ const UserAllModel = require('../models/UserAllModel');
  const getAllController = async(req,res)=>{
    try{
       const data = await UserAllModel.find();
-      res.json(data)
+      res.status(200).json(data)
       console.log(data);
   }
   catch(error){
@@ -35,7 +35,7 @@ const UserAllModel = require('../models/UserAllModel');
     console.log(req.params.id);
    try{
       const data = await UserAllModel.findById(req.params.id);
-      res.json(data);
+      res.status(200).json(data);
       console.log(data);
   }
   catch(error){
@@ -53,7 +53,7 @@ const updateController =async(req,res)=>{
             id, updatedData, options
         )
 
-        res.send(result)
+        res.status(200).send(result)
         console.log(result);
     }
     catch (error) {

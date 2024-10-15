@@ -3,10 +3,18 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
-const registerController = async(req,res)=>{
+const {  validationResult } = require('express-validator');
+
+const registerController = async(req,res,next)=>{
+
+    //validation 
+    const errors = validationResult(req);
+    
+    if (errors.isEmpty()){
     const { name,username,email,password} = req.body;
     const user = await UserModel.findOne({email:email});
     if(user){
+
         res.send({status:"failed",message:"Email already exists"});
     }
     else{
@@ -40,6 +48,14 @@ const registerController = async(req,res)=>{
             res.send({status:"failed",message:"All fields are required"});
         }
     }
+    next();
+}
+else{ 
+    res.status(400).json({ 
+        errors: errors.array()
+         })
+        
+  }
 }
 //
 const loginController = async(req,res)=>{

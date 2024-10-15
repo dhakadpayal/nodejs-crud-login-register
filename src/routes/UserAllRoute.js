@@ -13,8 +13,8 @@ userRoute.post('/create',postController);
 userRoute.get('/getAll',getAllController);
 //get by id method
 userRoute.get('/getOne/:id',getOneController);
-// update data
+// update data by Id
 userRoute.patch('/update/:id',updateController);
-// delete data
+// delete data by Id
 userRoute.delete('/delete/:id',deleteController);
 module.exports = userRoute;
